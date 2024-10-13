@@ -1,0 +1,82 @@
+<mvc:View
+    controllerName="com.incresol.sendgridfrontendapplication.controller.LoginPage"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt"
+>
+    <Page
+        id="containerPage"
+        height="100%"
+    >
+        <content>
+            <tnt:ToolHeader id="shellLikeToolHeaderOnlyMandatoryControls">
+                <Image
+                    id="_IDGenImage"
+                    src="../image/inclogo.png"
+                    decorative="true"
+                    tooltip="Incresol Logo"
+                >
+                    <layoutData>
+                        <OverflowToolbarLayoutData
+                            id="_IDGenOverflowToolbarLayoutData"
+                            priority="NeverOverflow"
+                        />
+                    </layoutData>
+                </Image>
+                <ToolbarSpacer id="_IDGenToolbarSpacerLeft" />
+                <Title
+                    id="_IDGenTitle1"
+                    text="Incresol Sales Mail Status Tracker Application "
+                    wrapping="true"
+                />
+                <ToolbarSpacer id="_IDGenToolbarSpacerRight" />
+            </tnt:ToolHeader>
+            <VBox
+                id="_IDGenVBox"
+                alignItems="Center"
+                height="100%"
+                class="sapUiLargeMarginTop"
+            >
+                <Panel
+                    id="_IDGenPanel"
+                    width="20rem"
+                >
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Sign In" />
+                            <ToolbarSpacer />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <Label
+                        id="_IDGenLabel21"
+                        text="UserId"
+                        labelFor="userId"
+                        design="Bold"
+                    />
+                    <Input
+                        id="userId"
+                        width="100%"
+                    />
+                    <Label
+                        id="_IDGenLabel2"
+                        text="Password"
+                        labelFor="password"
+                        design="Bold"
+                    />
+                    <Input
+                        id="password"
+                        width="100%"
+                        type="Password"
+                    />
+                    <Button
+                        id="_IDGenButton"
+                        type="Emphasized"
+                        text="Login"
+                        press=".onPressLoginButton"
+                    />
+                </Panel>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
