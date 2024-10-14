@@ -10,7 +10,7 @@ sap.ui.define(
     "sap/m/Text",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    //"sap/ui/export/Spreadsheet",
+    
   ],
   function (
     Controller,
@@ -41,7 +41,8 @@ sap.ui.define(
 
           // Fetch data from the API
           oModel.loadData(
-            "http://104.237.9.177:3000/mail-status-by-date",
+            "https://sendgrid-mail-status-application-1.onrender.com/mail-status-by-date",
+            // "http://104.237.9.177:3000/mail-status-by-date",
             {},
             true,
             "GET",
@@ -82,7 +83,7 @@ sap.ui.define(
 
           // Fetch data from the API
           myModel.loadData(
-            `http://104.237.9.177:3000/event/${sSelectedText}`,
+            `https://sendgrid-mail-status-application-1.onrender.com/event/${sSelectedText}`,
             {},
             true,
             "GET",
@@ -134,7 +135,7 @@ sap.ui.define(
 
           // Fetch data from the API
           oMod.loadData(
-            `http://104.237.9.177:3000/mail-status-by-date?date=${sStartDate}`,
+            `https://sendgrid-mail-status-application-1.onrender.com/mail-status-by-date?date=${sStartDate}`,
             {},
             true,
             "GET",
@@ -169,7 +170,7 @@ sap.ui.define(
 
           // Fetch data from the API
           oMod1.loadData(
-            `http://104.237.9.177:3000/mail-status-by-to?to=${sToValue}`,
+            `https://sendgrid-mail-status-application-1.onrender.com/mail-status-by-to?to=${sToValue}`,
             {},
             true,
             "GET",
@@ -195,74 +196,80 @@ sap.ui.define(
 
           this.getView().setModel(oMod1);
         },
-
-        // onDownloadExcel: function () {
-        //   const oTable = this.getView().byId("idProductsTable");
-
-        //   // Assuming the binding is to a model that has all the data
-        //   const oModel = oTable.getModel();
-        //   const sPath = oTable.getBinding("items").getPath();
-
-        //   // Fetch all data from the model
-        //   const aData = oModel.getProperty(sPath).map((item) => ({
-        //     to: item.to,
-        //     start_time: item.start_time,
-        //     latest_time: item.latest_time,
-        //     first_event_status: item.first_event_status,
-        //     latest_event_status: item.latest_event_status,
-        //     deferred: item.event_count ? item.event_count.deferred || 0 : 0,
-        //     delivered: item.event_count ? item.event_count.delivered || 0 : 0,
-        //     open: item.event_count ? item.event_count.open || 0 : 0,
-        //     click: item.event_count ? item.event_count.click || 0 : 0,
-        //     bounce: item.event_count ? item.event_count.bounce || 0 : 0,
-        //     dropped: item.event_count ? item.event_count.dropped || 0 : 0,
-        //     spamreport: item.event_count ? item.event_count.spamreport || 0 : 0,
-        //     unsubscribe: item.event_count
-        //       ? item.event_count.unsubscribe || 0
-        //       : 0,
-        //   }));
-
-        //   const aColumns = [
-        //     { label: "TO", property: "to" },
-        //     { label: "Start Time", property: "start_time" },
-        //     { label: "Latest Time", property: "latest_time" },
-        //     { label: "First Event", property: "first_event_status" },
-        //     { label: "Latest Event", property: "latest_event_status" },
-        //     { label: "Deferred", property: "deferred" },
-        //     { label: "Delivered", property: "delivered" },
-        //     { label: "Open", property: "open" },
-        //     { label: "Click", property: "click" },
-        //     { label: "Bounce", property: "bounce" },
-        //     { label: "Dropped", property: "dropped" },
-        //     { label: "Spam Report", property: "spamreport" },
-        //     { label: "Unsubscribe", property: "unsubscribe" },
-        //   ];
-
-        //   // Get current date in 'YYYY-MM-DD' format
-        //   const currentDate = new Date().toISOString().split("T")[0];
-
-        //   const oSpreadsheet = new Spreadsheet({
-        //     workbook: {
-        //       columns: aColumns,
-        //       // Set the sheet name
-        //       name: "Mail Status",
-        //     },
-        //     dataSource: aData,
-        //     // Name the file with the current date
-        //     fileName: `MailStatus_${currentDate}.xlsx`,
-        //   });
-
-        //   oSpreadsheet
-        //     .build()
-        //     .then(function () {
-        //       oSpreadsheet.destroy();
-        //     })
-        //     .catch(function (oError) {
-        //       MessageBox.error("Error generating spreadsheet.");
-        //     });
-        // },
+        onDownloadExcel: function () {
+          const oTable = this.getView().byId("idProductsTable");
+      
+          // Get the model and the path to the data
+          const oModel = oTable.getModel();
+          const sPath = oTable.getBinding("items").getPath();
+          
+          // Fetch all data from the model
+          const aData = oModel.getProperty(sPath).map((item) => ({
+              to: item.to,
+              start_time: item.start_time,
+              latest_time: item.latest_time,
+              first_event_status: item.first_event_status,
+              latest_event_status: item.latest_event_status,
+              deferred: item.event_count ? item.event_count.deferred || 0 : 0,
+              delivered: item.event_count ? item.event_count.delivered || 0 : 0,
+              open: item.event_count ? item.event_count.open || 0 : 0,
+              click: item.event_count ? item.event_count.click || 0 : 0,
+              bounce: item.event_count ? item.event_count.bounce || 0 : 0,
+              dropped: item.event_count ? item.event_count.dropped || 0 : 0,
+              spamreport: item.event_count ? item.event_count.spamreport || 0 : 0,
+              unsubscribe: item.event_count ? item.event_count.unsubscribe || 0 : 0,
+          }));
+      
+          // Define column headers
+          const aColumns = [
+              { label: "TO", property: "to" },
+              { label: "Start Time", property: "start_time" },
+              { label: "Latest Time", property: "latest_time" },
+              { label: "First Event", property: "first_event_status" },
+              { label: "Latest Event", property: "latest_event_status" },
+              { label: "Deferred", property: "deferred" },
+              { label: "Delivered", property: "delivered" },
+              { label: "Open", property: "open" },
+              { label: "Click", property: "click" },
+              { label: "Bounce", property: "bounce" },
+              { label: "Dropped", property: "dropped" },
+              { label: "Spam Report", property: "spamreport" },
+              { label: "Unsubscribe", property: "unsubscribe" },
+          ];
+      
+          // Create a worksheet from the data
+          const worksheet = XLSX.utils.json_to_sheet(aData);
+      
+          // Create a new workbook and append the worksheet
+          const workbook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(workbook, worksheet, "Mail Status");
+      
+          // Set the filename with current date
+          const currentDate = new Date().toISOString().split("T")[0];
+          const fileName = `MailStatus_${currentDate}.xlsx`;
+      
+          // Create a binary string for download
+          const blob = new Blob([XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' })], {
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          });
+      
+          // Create a link element to trigger the download
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          a.click();
+      
+          // Clean up the URL object
+          URL.revokeObjectURL(url);
+      },
 
         
+
+       
+      
+
+       
 
         onLogoutPress: function () {
           localStorage.removeItem("apptoken");
