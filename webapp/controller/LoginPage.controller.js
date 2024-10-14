@@ -6,11 +6,11 @@ sap.ui.define(
     return Controller.extend(
       "com.incresol.sendgridfrontendapplication.controller.LoginPage",
       {
-        onInit: function () {},
+        onInit: function () { },
         onPressLoginButton: function () {
-         
+
           var oRouter = this.getOwnerComponent().getRouter();
-          
+
           // Get references to the Input fields
           var oUserIdInput = this.byId("userId").getValue();
           var oPasswordInput = this.byId("password").getValue();
@@ -42,8 +42,8 @@ sap.ui.define(
           };
 
           $.ajax({
-            url:"https://sendgrid-mail-status-application-1.onrender.com/api/login",
-           
+            url: "http://104.237.9.177:3000/api/login",
+
             type: "POST",
             dataType: "json",
             contentType: "application/json",
